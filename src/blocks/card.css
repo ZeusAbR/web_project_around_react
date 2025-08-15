@@ -1,0 +1,49 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  position: relative;
+}
+
+.card__element {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  padding: 25px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.card__name {
+  font-family: "Inter", Arial, sans-serif;
+  margin: 0;
+  text-overflow: ellipsis;
+  width: 185px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.card__vector {
+  width: 21px;
+  height: 19px;
+  cursor: pointer;
+}
+.card__vector:hover {
+  opacity: 0.7;
+}
+.card__image {
+  width: 100%;
+  height: 80%;
+}
+
+.card__trash {
+  display: flex;
+  /* flex-direction: column; */
+  position: absolute;
+  cursor: pointer;
+  top: 18px;
+  right: 15px;
+}
+.card__trash:hover {
+  opacity: 0.7; /* Adjust the opacity value as desired */
+}

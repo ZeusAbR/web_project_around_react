@@ -1,0 +1,11 @@
+.page {
+  /* MAIN PAGE */
+
+  background: #000000;
+}
+
+@media screen and (width<881px) {
+  .page {
+    padding: 0 20px;
+  }
+}
