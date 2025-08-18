@@ -1,15 +1,15 @@
 export default function EditAvatar() {
-    return (<form class="popup__form" id="popupFormAvatar">
+    return (<form className="popup__form" id="popupFormAvatar">
           <input
-            class="popup__input"
+            className="popup__input"
             type="url"
             id="url"
             name="url"
             placeholder="Enlace a la imagen"
             required
           />
-          <p class="url-error"></p>
-          <button id="popupButtonAvatar" class="popup__button">Guardar</button>
+          <p className="url-error"></p>
+          <button id="popupButtonAvatar" className="popup__button">Guardar</button>
         </form>
     )
 }

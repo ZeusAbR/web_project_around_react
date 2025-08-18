@@ -1,22 +1,27 @@
 export default function Popup(props) {
   //los hijos son el contenido de la ventana emergente
-  const {title, children} = props;
+  const { onClose, title, children } = props;
   return (
-    <div class="popup" id="popup-add">
-      <div class="popup__overlay" id="popupOverlayAdd"></div>
+    <div className="popup" id="popup-add">
+      <div className="popup__overlay" id="popupOverlayAdd"></div>
 
-      <div class="popup__container">
+      <div className={`popup__container ${
+          !title ? "popup__container_content_image" : ""
+        }`}>
         <img
-          class="popup__close"
+          className="popup__close"
           id="popup-close-add"
           src="./images/CloseIcon.png"
           alt="close icon"
+          onClick={onClose} 
+
         />
-        <h2 class="popup__title">{title}</h2>
+
+        {title &&<h2 className="popup__title">{title}</h2>}
 
         {children}
       </div>
     </div>
-    
+
   )
 }
