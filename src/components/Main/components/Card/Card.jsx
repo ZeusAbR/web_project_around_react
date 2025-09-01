@@ -5,10 +5,10 @@ import CurrentUserContext from '../../../contexts/CurrentUserContext';
 import trashIconImage from '../../../../images/trashIcon.png'
 
 export default function Card(props) {
-  const currentUser = useContext(CurrentUserContext);
-if (!currentUser) {
-    return null; // Or some loading indicator/fallback UI
-  }
+  const { currentUser } = useContext(CurrentUserContext);
+  // if (!currentUser) {
+  //   return null; // Or some loading indicator/fallback UI
+  // }
   const { name, link } = props.card;
   const isLiked = props.card.isLiked;
 

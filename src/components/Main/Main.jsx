@@ -22,7 +22,7 @@ function Main() {
   const newImagePopup = { children: <ImagePopup /> }
   const [cards, setCards] = useState([])
   // -------
-  const currentUser = useContext(CurrentUserContext);
+  const {currentUser} = useContext(CurrentUserContext);
 
 
   useEffect(() => {
@@ -58,14 +58,14 @@ function Main() {
       console.error('Error al eliminar la tarjeta:', error);
     }
   }
-
+// se moveran a APP
   function handleOpenPopup(popup) {
     setPopup(popup);
   }
   function handleClosePopup() {
     setPopup(null);
   }
-
+  
   return (
     <main className="main">
       <section className="profile">
