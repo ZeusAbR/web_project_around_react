@@ -1,10 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useContext } from "react";
+import CurrentUserContext from "../contexts/CurrentUserContext";
+
 import Popup from "./components/Popup/Popup";
 import NewCard from "./components/Popup/NewCard/NewCard";
 import EditAvatar from "./components/Popup/EditAvatar/EditAvatar";
 import EditProfile from "./components/Popup/EditProfile/EditProfile";
 import Card from "./components/Card/Card";
 import ImagePopup from "./components/Popup/ImagePopup/ImagePopup";
+
+import { api } from "../../utils/api";
+
 
 function Main() {
 
@@ -14,38 +20,58 @@ function Main() {
   const newAvatarPopup = { title: "Foto de perfil", children: <EditAvatar /> };
   const newProfilePopup = { title: "Nombre de perfil", children: <EditProfile /> };
   const newImagePopup = { children: <ImagePopup /> }
-  const cards = [
-    {
-      isLiked: false,
-      _id: '5d1f0611d321eb4bdcd707dd',
-      name: 'Yosemite Valley',
-      link: 'https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_yosemite.jpg',
-      owner: '5d1f0611d321eb4bdcd707dd',
-      createdAt: '2019-07-05T08:10:57.741Z',
-    },
-    {
-      isLiked: false,
-      _id: '5d1f064ed321eb4bdcd707de',
-      name: 'Lake Louise',
-      link: 'https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_lake-louise.jpg',
-      owner: '5d1f0611d321eb4bdcd707dd',
-      createdAt: '2019-07-05T08:11:58.324Z',
-    },
-  ];
+  const [cards, setCards] = useState([])
+  // -------
+  const currentUser = useContext(CurrentUserContext);
 
-  console.log(cards);
+
+  useEffect(() => {
+    api.getInitialCards()
+      .then((cardsData) => {
+        setCards(cardsData)
+      })
+      .catch((error) => {
+        console.error('Error al obtener las tarjetas:', error);
+      });
+  }, []);
+
+  async function handleCardLike(card) {
+    // Verifica una vez más si a esta tarjeta ya les has dado like
+    const isLiked = card.isLiked;
+    if (isLiked === true) {
+      await api.dislikeCard(card._id, !isLiked).then((newCard) => {
+        setCards((state) => state.map((currentCard) => currentCard._id === card._id ? newCard : currentCard));
+      }).catch((error) => console.error(error));
+    }
+    else {
+      await api.likeCard(card._id, !isLiked).then((newCard) => {
+        setCards((state) => state.map((currentCard) => currentCard._id === card._id ? newCard : currentCard));
+      }).catch((error) => console.error(error));
+      // Envía una solicitud a la API y obtén los datos actualizados de la tarjeta
+    }
+  }
+  async function handleCardDelete(card) {
+    try {
+      await api.deleteCard(card._id);
+      setCards((state) => state.filter((currentCard) => currentCard._id !== card._id));
+    } catch (error) {
+      console.error('Error al eliminar la tarjeta:', error);
+    }
+  }
 
   function handleOpenPopup(popup) {
     setPopup(popup);
   }
   function handleClosePopup() {
     setPopup(null);
-  } return (
+  }
+
+  return (
     <main className="main">
       <section className="profile">
         <div className="profile__avatar">
           <div className="profile__superposition">
-            <img src="./images/profile" alt="fotografia avatar" className="profile__picture" />
+            <img src={currentUser?.avatar} alt="Avatar del usuario" className="profile__picture" />
             <img
               src="./images/pencil.png"
               alt="edit pencil"
@@ -56,8 +82,8 @@ function Main() {
           </div>
           <div className="profile__info">
             <div className="profile__details">
-              <h1 className="profile__name">Jacques Cousteau</h1>
-              <p className="profile__description">Estudiante/TripleTen</p>
+              <h1 className="profile__name">{currentUser?.name}</h1>
+              <p className="profile__description">{currentUser?.about}</p>
             </div>
             <div className="profile__edit">
               <img src="./images/EditButton.png" alt="edit button"
@@ -79,9 +105,8 @@ function Main() {
       {/* carta--------------- */}
       <section className="elements">
         {cards.map((card) => (
-          <Card key={card._id} card={card} showPopup={handleOpenPopup} newImagePopup={newImagePopup}/>
+          <Card key={card._id} card={card} showPopup={handleOpenPopup} newImagePopup={newImagePopup} handleCardLike={handleCardLike} handleCardDelete={handleCardDelete} />
         ))}
-
       </section>
       {popup && (
         <Popup onClose={handleClosePopup} title={popup.title}>
