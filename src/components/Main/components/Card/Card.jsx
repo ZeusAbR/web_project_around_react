@@ -16,7 +16,7 @@ export default function Card(props) {
   const { handleCardLike } = props
 
 
-  const isOwn = props.card.owner === currentUser._id;
+  const isOwn = props.card.owner === currentUser?._id;
   const cardDeleteButtonImage = `card__trashy ${isOwn ? 'card__delete-button_visible' : 'card__delete-button_hidden'}`;
   const { handleCardDelete } = props
 
