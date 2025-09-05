@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react';
-import CurrentUserContext from '../../../../contexts/CurrentUserContext';
+import CurrentUserContext from '../../../../../contexts/CurrentUserContext';
 
 export default function EditProfile({ handleClosePopup }) {
     const { currentUser, handleUpdateUser } = useContext(CurrentUserContext); // Obtiene el objeto currentUser

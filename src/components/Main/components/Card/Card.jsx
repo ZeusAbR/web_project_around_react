@@ -1,7 +1,7 @@
 import unlikeVectorImage from '../../../../images/Vectorunlike.png'
 import likeVectorImage from '../../../../images/Vectorlike.png'
 import { useContext } from 'react';
-import CurrentUserContext from '../../../contexts/CurrentUserContext';
+import CurrentUserContext from '../../../../contexts/CurrentUserContext';
 import trashIconImage from '../../../../images/trashIcon.png'
 
 export default function Card(props) {

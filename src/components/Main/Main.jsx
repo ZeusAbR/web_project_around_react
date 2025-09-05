@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useContext } from "react";
-import CurrentUserContext from "../contexts/CurrentUserContext";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 import Popup from "./components/Popup/Popup";
 import NewCard from "./components/Popup/NewCard/NewCard";

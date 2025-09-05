@@ -7,7 +7,7 @@ import Main from './components/Main/Main'
 import Footer from './components/Footer/Footer'
 
 import { api } from "./utils/api";
-import CurrentUserContext from './components/contexts/CurrentUserContext';
+import CurrentUserContext from './contexts/CurrentUserContext';
 
 function App() {
 
