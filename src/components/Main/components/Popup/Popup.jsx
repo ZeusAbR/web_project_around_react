@@ -4,36 +4,27 @@ export default function Popup(props) {
 
 
 
-// function AddPlacePopup({onAddPlace}) {
-//   function handleSubmit (e) {
-//     e.preventDefault();
-//     onAddPlace({
-//       name: nameRef.current.value,
-//       link: linkRef.current.value 
-//     });
-//   }
-// }
+
 
 
 
   return (
-    
+
     <div className="popup" id="popup-add">
       <div className="popup__overlay" id="popupOverlayAdd"></div>
 
-      <div className={`popup__container ${
-          !title ? "popup__container_content_image" : ""
+      <div className={`popup__container ${!title ? "popup__container_content_image" : ""
         }`}>
         <img
           className="popup__close"
           id="popup-close-add"
           src="./images/CloseIcon.png"
           alt="close icon"
-          onClick={onClose} 
+          onClick={onClose}
 
         />
 
-        {title &&<h2 className="popup__title">{title}</h2>}
+        {title && <h2 className="popup__title">{title}</h2>}
 
         {children}
       </div>
