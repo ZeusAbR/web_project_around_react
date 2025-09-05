@@ -1,7 +1,23 @@
 export default function Popup(props) {
   //los hijos son el contenido de la ventana emergente
   const { onClose, title, children } = props;
+
+
+
+// function AddPlacePopup({onAddPlace}) {
+//   function handleSubmit (e) {
+//     e.preventDefault();
+//     onAddPlace({
+//       name: nameRef.current.value,
+//       link: linkRef.current.value 
+//     });
+//   }
+// }
+
+
+
   return (
+    
     <div className="popup" id="popup-add">
       <div className="popup__overlay" id="popupOverlayAdd"></div>
 

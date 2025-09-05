@@ -1,8 +1,7 @@
 import { useState, useContext } from 'react';
 import CurrentUserContext from '../../../../contexts/CurrentUserContext';
-import { use } from 'react';
 
-export default function EditProfile() {
+export default function EditProfile({ handleClosePopup }) {
     const { currentUser, handleUpdateUser } = useContext(CurrentUserContext); // Obtiene el objeto currentUser
 
     const [name, setName] = useState(currentUser.name); // Agrega la variable de estado para name
@@ -19,6 +18,8 @@ export default function EditProfile() {
         event.preventDefault(); // Evita el comportamiento predeterminado del envío de formularios
 
         handleUpdateUser({ name, about: description }); // Actualiza la información del usuario
+
+        handleClosePopup();
     };
     return (
 

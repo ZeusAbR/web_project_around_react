@@ -12,60 +12,27 @@ import ImagePopup from "./components/Popup/ImagePopup/ImagePopup";
 import { api } from "../../utils/api";
 
 
-function Main() {
+function Main({ cards, onCardLike, onCardDelete }) {
+
 
   const [popup, setPopup] = useState(null);
-  console.log(popup)
-  const newCardPopup = { title: "Nuevo lugar", children: <NewCard /> };
-  const newAvatarPopup = { title: "Foto de perfil", children: <EditAvatar /> };
-  const newProfilePopup = { title: "Nombre de perfil", children: <EditProfile /> };
+  const newCardPopup = { title: "Nuevo lugar", children: <NewCard handleClosePopup={handleClosePopup} /> };
+  const newAvatarPopup = { title: "Foto de perfil", children: <EditAvatar handleClosePopup={handleClosePopup} /> };
+  const newProfilePopup = { title: "Nombre de perfil", children: <EditProfile handleClosePopup={handleClosePopup} /> };
   const newImagePopup = { children: <ImagePopup /> }
-  const [cards, setCards] = useState([])
   // -------
-  const {currentUser} = useContext(CurrentUserContext);
+  const { currentUser } = useContext(CurrentUserContext);
 
 
-  useEffect(() => {
-    api.getInitialCards()
-      .then((cardsData) => {
-        setCards(cardsData)
-      })
-      .catch((error) => {
-        console.error('Error al obtener las tarjetas:', error);
-      });
-  }, []);
 
-  async function handleCardLike(card) {
-    // Verifica una vez más si a esta tarjeta ya les has dado like
-    const isLiked = card.isLiked;
-    if (isLiked === true) {
-      await api.dislikeCard(card._id, !isLiked).then((newCard) => {
-        setCards((state) => state.map((currentCard) => currentCard._id === card._id ? newCard : currentCard));
-      }).catch((error) => console.error(error));
-    }
-    else {
-      await api.likeCard(card._id, !isLiked).then((newCard) => {
-        setCards((state) => state.map((currentCard) => currentCard._id === card._id ? newCard : currentCard));
-      }).catch((error) => console.error(error));
-      // Envía una solicitud a la API y obtén los datos actualizados de la tarjeta
-    }
-  }
-  async function handleCardDelete(card) {
-    try {
-      await api.deleteCard(card._id);
-      setCards((state) => state.filter((currentCard) => currentCard._id !== card._id));
-    } catch (error) {
-      console.error('Error al eliminar la tarjeta:', error);
-    }
-  }
-// se moveran a APP
+  // se moveran a APP
   function handleOpenPopup(popup) {
     setPopup(popup);
   }
   function handleClosePopup() {
     setPopup(null);
   }
-  
+
   return (
     <main className="main">
       <section className="profile">
@@ -105,7 +72,7 @@ function Main() {
       {/* carta--------------- */}
       <section className="elements">
         {cards.map((card) => (
-          <Card key={card._id} card={card} showPopup={handleOpenPopup} newImagePopup={newImagePopup} handleCardLike={handleCardLike} handleCardDelete={handleCardDelete} />
+          <Card key={card._id} card={card} showPopup={handleOpenPopup} newImagePopup={newImagePopup} handleCardLike={onCardLike} handleCardDelete={onCardDelete} />
         ))}
       </section>
       {popup && (
